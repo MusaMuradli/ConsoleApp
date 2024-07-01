@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Console_Project.Models;
 
-namespace Console_Project.Models
+public class Category:BaseEntity
 {
-    internal class Category
-    {
-    }
+    public string Name { get; set; }
 }

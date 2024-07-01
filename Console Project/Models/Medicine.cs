@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Console_Project.Models;
 
-namespace Console_Project.Models
+public class Medicine:BaseEntity
 {
-    internal class Medicine
+    public string Name { get; set; }
+    public int Price { get; set; }
+    public int CategoryId { get; set; }
+    public int UserId { get; set; }
+    public DateTime CreatedDate { get; set; }
+
+    public Medicine(string name, int price, int categoryId, int userId)
     {
+        Name = name;
+        Price = price;
+        CategoryId = categoryId;
+        UserId = userId;
+        CreatedDate = DateTime.Now;
+
     }
 }

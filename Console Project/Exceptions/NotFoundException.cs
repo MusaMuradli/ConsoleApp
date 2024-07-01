@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace Console_Project.Exceptions
+namespace Console_Project.Exceptions;
+
+public class NotFoundException : Exception
 {
-    internal class NotFoundException
+    public NotFoundException(string Message):base(Message) 
     {
+
     }
 }

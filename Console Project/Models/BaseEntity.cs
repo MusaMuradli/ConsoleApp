@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using System.Reflection.Metadata.Ecma335;
 
-namespace Console_Project.Models
+namespace Console_Project.Models;
+
+public abstract class BaseEntity
 {
-    internal class BaseEntity
+    private static int _id;
+    public int Id { get;}
+    public BaseEntity()
     {
+        Id = ++_id;
     }
+
 }
