@@ -15,6 +15,8 @@ namespace Console_Project
             Users = new User[0];
             Medicines = new Medicine[0];
         }
+
+
         
     }
 }

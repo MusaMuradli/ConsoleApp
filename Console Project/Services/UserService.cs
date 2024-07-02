@@ -6,11 +6,11 @@ namespace Console_Project.Services
 {
     public class UserService
     {
-        public User Login(string username, string password)
+        public User Login(string email, string password)
         {
             foreach (var item in DB.Users)
             {
-                if (item.FullName == username && item.Password==password)
+                if (item.Email == email && item.Password==password)
                 {
                     return item;
                 }
