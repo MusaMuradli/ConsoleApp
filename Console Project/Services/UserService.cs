@@ -14,17 +14,18 @@ namespace Console_Project.Services
                 {
                     return item;
                 }
-
             }
             throw new NotFoundException("User tapilmadi");
         }
         public void  AddUser(User user)
         {
+            if (DB.Users.Any(u => u != null && u.Email == user.Email))
+            {
+                throw new Exception("Bu email ünvanı ile artıq qeydiyyatdan keçilib.");
+            }
             Array.Resize(ref DB.Users, DB.Users.Length+1);
             DB.Users[DB.Users.Length-1] = user;
-
             Console.WriteLine("User succesfully added");
-
         }
     }
 }

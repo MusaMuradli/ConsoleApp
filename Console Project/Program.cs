@@ -23,9 +23,9 @@ string menyuStart = Console.ReadLine();
 switch (menyuStart)
 {
     case "1":
-        bash:
+    bash:
         Console.WriteLine("Enter the fullname");
-        string fullname=Console.ReadLine();
+        string fullname = Console.ReadLine();
         try
         {
             if (fullname.Length < 4)
@@ -54,17 +54,17 @@ switch (menyuStart)
         catch (Exception ex)
         {
             Console.WriteLine("Xeta: " + ex.Message);
-            goto bash;
             Console.ResetColor();
+            goto bash;
         }
-        emailBash:
+    emailBash:
         Console.WriteLine("Enter the email");
-        string email=Console.ReadLine();
+        string email = Console.ReadLine();
         string pattern = @"^[a-z0-9._%+-]+@gmail\.com$";
 
         if (Regex.IsMatch(email, pattern))
         {
-            Console.WriteLine("Email doğrudur.");
+
         }
         else
         {
@@ -73,7 +73,7 @@ switch (menyuStart)
             Console.ResetColor();
             goto emailBash;
         }
-        passwordBash:
+    passwordBash:
         Console.WriteLine("Enter the password");
         string password = "";
         ConsoleKeyInfo key;
@@ -111,11 +111,11 @@ switch (menyuStart)
                 Console.ForegroundColor = ConsoleColor.Red;
                 throw new Exception("Parolda en azı bir reqem olmalıdır.");
             }
-            
-            Console.WriteLine("Daxil edilen parol qebul edildi.");
+
             User user = new(fullname, email, password);
             userService.AddUser(user);
-            break; 
+            goto restart;
+
         }
         catch (Exception ex)
         {
@@ -123,7 +123,7 @@ switch (menyuStart)
             Console.ResetColor();
             goto passwordBash;
         }
-      
+
     case "2":
         User adminUser = null;
         while (adminUser == null)
@@ -136,6 +136,7 @@ switch (menyuStart)
             {
                 adminUser = userService.Login(confimEmail, confimPassword);
                 Console.WriteLine("Girish olundu: \n");
+                break;
             }
             catch (NotFoundException q)
             {
@@ -144,13 +145,14 @@ switch (menyuStart)
         }
 
         break;
+    case "0":
+        return;
+  
     default:
-        break;
+        goto restart;
+
+        
 }
-goto restart;
-
-
-
 
 bool stop = false;
 menyu1:
