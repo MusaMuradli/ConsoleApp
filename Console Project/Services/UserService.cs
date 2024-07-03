@@ -23,6 +23,8 @@ namespace Console_Project.Services
             Array.Resize(ref DB.Users, DB.Users.Length+1);
             DB.Users[DB.Users.Length-1] = user;
 
+            Console.WriteLine("User succesfully added");
+
         }
     }
 }
