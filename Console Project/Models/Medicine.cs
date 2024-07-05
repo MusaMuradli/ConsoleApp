@@ -15,6 +15,5 @@ public class Medicine:BaseEntity
         CategoryId = categoryId;
         UserId = userId;
         CreatedDate = DateTime.Now;
-
     }
 }
