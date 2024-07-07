@@ -158,8 +158,8 @@ Console.WriteLine("1. Create Category"); //+
 Console.WriteLine("2. Gett all Categories");//+
 Console.WriteLine("3. Create Medicine"); //+
 Console.WriteLine("4. List All Medicines");//+
-Console.WriteLine("5. Get Medicine By Id");
-Console.WriteLine("6. Get Medicine By Name");
+Console.WriteLine("5. Get Medicine By Id");//+
+Console.WriteLine("6. Get Medicine By Name");//+
 Console.WriteLine("7. Get Medicine By Category");
 Console.WriteLine("8. Remove Medicine");
 Console.WriteLine("9. Update Medicine");
@@ -206,17 +206,19 @@ while (!stop)
             }
             int categoryId = int.Parse(Console.ReadLine());
             Console.WriteLine("User id daxil edin");
-            int userId =int.Parse(Console.ReadLine()) ;
+            int userId = int.Parse(Console.ReadLine());
             Medicine medicine = new Medicine(name, price, categoryId, userId);
             medicineService.CreateMedicine(medicine);
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{medicine.Name} adli medicine elave olundu");
+            Console.ResetColor();
             Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
             break;
         case "4":
-            Medicine[] med =  medicineService.GetAllMedicines();
+            Medicine[] med = medicineService.GetAllMedicines();
             foreach (var item in med)
             {
-                Category category1=new();
+                Category category1 = new();
 
                 foreach (var c in DB.Categories)
                 {
@@ -226,19 +228,154 @@ while (!stop)
                         break;
                     }
                 }
-                Console.ForegroundColor= ConsoleColor.Green;
-                Console.WriteLine($" Medicine Id -{item.Id}Medicine Name - {item.Name}: Medicine Price - {item.Price}: Medicine Category - {category1.Name} ");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($" Medicine Id = {item.Id}, Medicine Name - {item.Name}, Medicine Price - {item.Price}, Medicine Category - {category1.Name}");
                 Console.ResetColor();
+
             }
+            Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
             break;
         case "5":
-            Console.ForegroundColor=ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Medicine Id daxil edin.....");
             Console.ResetColor();
-            int id = int.Parse(Console.ReadLine());
-            medicineService.GetMedicineById(id);
-            break;
+            try
+            {
+                int id = int.Parse(Console.ReadLine());
+                medicineService.GetMedicineById(id);
+                Console.ForegroundColor = ConsoleColor.Green;
+                foreach (var item in DB.Medicines)
+                {
+                    Category category1 = new();
 
+                    foreach (var c in DB.Categories)
+                    {
+                        if (c.Id == item.CategoryId)
+                        {
+                            category1 = c;
+                            break;
+                        }
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Medicine name: {item.Name}, Price: {item.Price}, Category Name:{category1.Name}");
+                    Console.ResetColor();
+                    Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
+                    break;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Xeta baş verdi: {ex.Message}");
+                Console.ResetColor();
+                goto menyu1;
+            }
+            break;
+        case "6":
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Medicine Name daxil edin.....");
+            Console.ResetColor();
+            foreach (var item in DB.Medicines)
+            {
+                Console.WriteLine(item.Name);
+            }
+            try
+            {
+                string medicineName = Console.ReadLine();
+                medicineService.GetMedicineByName(medicineName);
+                Console.ForegroundColor = ConsoleColor.Green;
+                foreach (var item in DB.Medicines)
+                {
+                    Category category1 = new();
+
+                    foreach (var c in DB.Categories)
+                    {
+                        if (c.Id == item.CategoryId)
+                        {
+                            category1 = c;
+                            break;
+                        }
+                    }
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"Medicine name: {item.Name}, Price: {item.Price}, Category Name:{category1.Name}");
+                    Console.ResetColor();
+                    Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
+                    break;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Xeta baş verdi: {ex.Message}");
+                Console.ResetColor();
+                goto menyu1;
+            }
+            break;
+        case "7":
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Medicine kateqoriyasi daxil edin.....");
+            Console.ResetColor();
+            foreach (var item in DB.Categories)
+            {
+                Console.WriteLine($"Category ID:{item.Id}, name:{item.Name}");
+            }
+            try
+            {
+                Console.WriteLine("Kateqoriya ID-ni daxil edin:");
+                int medicineCategoryId = int.Parse(Console.ReadLine());
+                Medicine[] medicines = medicineService.GetMedicineByCategory(medicineCategoryId);
+                if (medicines.Length > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    foreach (var item in medicines)
+                    {
+                        if (item != null)
+                        {
+                            Console.WriteLine($"Medicine ID: {item.Id}, Adı: {item.Name}, Qiyməti: {item.Price}");
+                        }
+                    }
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Bu kateqoriyaya aid heç bir medikament tapılmadı.");
+                    Console.ResetColor();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Xeta baş verdi: {ex.Message}");
+                Console.ResetColor();
+                goto menyu1;
+            }
+            break;
+            //string medicineName = Console.ReadLine();
+            //medicineService.GetMedicineByName(medicineName);
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //foreach (var item in DB.Medicines)
+            //{
+            //    Category category1 = new();
+
+            //    foreach (var c in DB.Categories)
+            //    {
+            //        if (c.Id == item.CategoryId)
+            //        {
+            //            category1 = c;
+            //            break;
+            //        }
+            //    }
+            //    Console.ForegroundColor = ConsoleColor.Green;
+            //    Console.WriteLine($"Medicine name: {item.Name}, Price: {item.Price}, Category Name:{category1.Name}");
+            //    Console.ResetColor();
+            //    Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
+            //    break;
+            //}
+
+            break;
 
 
         case "yes":

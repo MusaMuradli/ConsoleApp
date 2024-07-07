@@ -2,14 +2,16 @@
 
 public class Medicine:BaseEntity
 {
+    private static int _id;
     public string Name { get; set; }
     public int Price { get; set; }
     public int CategoryId { get; set; }
     public int UserId { get; set; }
     public DateTime CreatedDate { get; set; }
 
-    public Medicine(string name, int price, int categoryId, int userId)
+    public Medicine( string name, int price, int categoryId, int userId)
     {
+        Id = ++_id;
         Name = name;
         Price = price;
         CategoryId = categoryId;

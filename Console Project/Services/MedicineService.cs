@@ -40,6 +40,7 @@ public class MedicineService
 
         }
         throw new NotFoundException("Bu Id-li medicine tapilmadi");
+        
     }
     public Medicine GetMedicineByName(string name)
     {
@@ -70,7 +71,7 @@ public class MedicineService
         int index = 0;
         foreach (var item in DB.Medicines)
         {
-            if (item.Id== categoryId)
+            if (item.CategoryId== categoryId)
             {
                 newMedicine[index++] = item;
             }
