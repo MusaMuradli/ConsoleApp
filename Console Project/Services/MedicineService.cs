@@ -90,8 +90,16 @@ public class MedicineService
                     DB.Medicines[j] = DB.Medicines[j + 1];
                 }
                 Array.Resize(ref DB.Medicines, DB.Medicines.Length-1);
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("Removdan sonra medicinler>>>>");
+                Console.ResetColor();
+                foreach (var item in DB.Medicines)
+                {
+                    Console.WriteLine($"Id:{item.Id} = Name:{item.Name}");
+                }
                 return;
             }
+
         }
         throw new NotFoundException("Verilmiş id-li medicine tapılmadı");
     }

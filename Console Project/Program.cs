@@ -153,15 +153,15 @@ CategoryService categoryService = new CategoryService();
 
 bool stop = false;
 menyu1:
-Console.WriteLine("Menu:");
+Console.WriteLine("Menyu:");
 Console.WriteLine("1. Create Category"); //+
 Console.WriteLine("2. Gett all Categories");//+
 Console.WriteLine("3. Create Medicine"); //+
 Console.WriteLine("4. List All Medicines");//+
 Console.WriteLine("5. Get Medicine By Id");//+
 Console.WriteLine("6. Get Medicine By Name");//+
-Console.WriteLine("7. Get Medicine By Category");
-Console.WriteLine("8. Remove Medicine");
+Console.WriteLine("7. Get Medicine By Category");//+
+Console.WriteLine("8. Remove Medicine");//+
 Console.WriteLine("9. Update Medicine");
 Console.WriteLine("10. Exit");
 Console.WriteLine("11. Menyu goster:");
@@ -353,30 +353,29 @@ while (!stop)
                 goto menyu1;
             }
             break;
-            //string medicineName = Console.ReadLine();
-            //medicineService.GetMedicineByName(medicineName);
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //foreach (var item in DB.Medicines)
-            //{
-            //    Category category1 = new();
+        case "8":
+            Console.ForegroundColor= ConsoleColor.Green;
+            Console.WriteLine("Revome elemek isdediyiniz medicinin İd daxil edin");
+            Console.ResetColor();
+            foreach (var item in DB.Medicines)
+            {
+                Console.WriteLine($"Id:{item.Id} = Name:{item.Name}");
+            }
+            try
+            {
+                int medicineDeleteByiD = int.Parse(Console.ReadLine());
+                medicineService.RemoveMedicine(medicineDeleteByiD);
 
-            //    foreach (var c in DB.Categories)
-            //    {
-            //        if (c.Id == item.CategoryId)
-            //        {
-            //            category1 = c;
-            //            break;
-            //        }
-            //    }
-            //    Console.ForegroundColor = ConsoleColor.Green;
-            //    Console.WriteLine($"Medicine name: {item.Name}, Price: {item.Price}, Category Name:{category1.Name}");
-            //    Console.ResetColor();
-            //    Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
-            //    break;
-            //}
 
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Xeta baş verdi: {ex.Message}");
+                Console.ResetColor();
+            }
+            Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
             break;
-
 
         case "yes":
             goto menyu1;
