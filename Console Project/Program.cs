@@ -11,145 +11,148 @@ MedicineService medicineService = new MedicineService();
 CategoryService categoryService = new CategoryService();
 
 
-//restart:
-//Console.WriteLine("Menu 1: ");
-//Console.WriteLine("1.User Registration");
-//Console.WriteLine("2.User Login");
-//Console.WriteLine("0.Exit");
-//Console.WriteLine("Enter your choice: ");
+restart:
+Console.WriteLine("Menu 1: ");
+Console.WriteLine("1.User Registration");
+Console.WriteLine("2.User Login");
+Console.WriteLine("0.Exit");
+Console.WriteLine("Enter your choice: ");
 
 
-//string menyuStart = Console.ReadLine();
+string menyuStart = Console.ReadLine();
 
-//switch (menyuStart)
-//{
-//    case "1":
-//    bash:
-//        Console.WriteLine("Enter the fullname");
-//        string fullname = Console.ReadLine();
-//        try
-//        {
-//            if (fullname.Length < 4)
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Ad minimum 4 herfden ibaret olmalıdır.");
-//            }
-//            if (fullname.Length > 10)
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Ad maksimum 10 herfden ibaret olmalıdır.");
-//            }
-//            if (!fullname.Any(char.IsUpper))
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Adda en azı bir böyük herf olmalıdır.");
-//            }
-//            if (!fullname.Any(char.IsLower))
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Adda en azı bir kiçik herf olmalıdır.");
-//            }
+switch (menyuStart)
+{
+    case "1":
+    bash:
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Enter the fullname");
+        Console.ResetColor();
+        string fullname = Console.ReadLine();
+        try
+        {
+            if (fullname.Length < 4)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Ad minimum 4 herfden ibaret olmalıdır.");
+            }
+            if (fullname.Length > 10)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Ad maksimum 10 herfden ibaret olmalıdır.");
+            }
+            if (!fullname.Any(char.IsUpper))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Adda en azı bir böyük herf olmalıdır.");
+            }
+            if (!fullname.Any(char.IsLower))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Adda en azı bir kiçik herf olmalıdır.");
+            }
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Daxil edilen ad: " + fullname);
+            Console.ResetColor();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Xeta: " + ex.Message);
+            Console.ResetColor();
+            goto bash;
+        }
+    emailBash:
+        Console.WriteLine("Enter the email");
+        string email = Console.ReadLine();
+        string pattern = @"^[a-z0-9._%+-]+@gmail\.com$";
 
-//            Console.WriteLine("Daxil edilen ad: " + fullname);
-//        }
-//        catch (Exception ex)
-//        {
-//            Console.WriteLine("Xeta: " + ex.Message);
-//            Console.ResetColor();
-//            goto bash;
-//        }
-//    emailBash:
-//        Console.WriteLine("Enter the email");
-//        string email = Console.ReadLine();
-//        string pattern = @"^[a-z0-9._%+-]+@gmail\.com$";
+        if (Regex.IsMatch(email, pattern))
+        {
 
-//        if (Regex.IsMatch(email, pattern))
-//        {
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Email yanlışdır. Email @gmail.com ile bitmeli ve böyük herf olmamalıdır.");
+            Console.ResetColor();
+            goto emailBash;
+        }
+    passwordBash:
+        Console.WriteLine("Enter the password");
+        string password = "";
+        ConsoleKeyInfo key;
+        do
+        {
+            key = Console.ReadKey(true);
 
-//        }
-//        else
-//        {
-//            Console.ForegroundColor = ConsoleColor.Red;
-//            Console.WriteLine("Email yanlışdır. Email @gmail.com ile bitmeli ve böyük herf olmamalıdır.");
-//            Console.ResetColor();
-//            goto emailBash;
-//        }
-//    passwordBash:
-//        Console.WriteLine("Enter the password");
-//        string password = "";
-//        ConsoleKeyInfo key;
-//        do
-//        {
-//            key = Console.ReadKey(true);
+            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+            {
+                password += key.KeyChar;
+                Console.Write("*");
+            }
+            else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password.Substring(0, (password.Length - 1));
+                Console.Write("\b \b");
+            }
+        }
+        while (key.Key != ConsoleKey.Enter);
+        Console.WriteLine();
+        try
+        {
+            if (password.Length < 5)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Parol minimum 5 simvoldan ibaret olmalıdır.");
+            }
+            if (password.Length > 10)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Parol maksimum 10 simvoldan ibaret olmalıdır.");
+            }
+            if (!password.Any(char.IsDigit))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                throw new Exception("Parolda en azı bir reqem olmalıdır.");
+            }
 
-//            if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-//            {
-//                password += key.KeyChar;
-//                Console.Write("*");
-//            }
-//            else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
-//            {
-//                password = password.Substring(0, (password.Length - 1));
-//                Console.Write("\b \b");
-//            }
-//        }
-//        while (key.Key != ConsoleKey.Enter);
-//        Console.WriteLine();
-//        try
-//        {
-//            if (password.Length < 5)
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Parol minimum 5 simvoldan ibaret olmalıdır.");
-//            }
-//            if (password.Length > 10)
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Parol maksimum 10 simvoldan ibaret olmalıdır.");
-//            }
-//            if (!password.Any(char.IsDigit))
-//            {
-//                Console.ForegroundColor = ConsoleColor.Red;
-//                throw new Exception("Parolda en azı bir reqem olmalıdır.");
-//            }
+            User user = new(fullname, email, password);
+            userService.AddUser(user);
+            goto restart;
 
-//            User user = new(fullname, email, password);
-//            userService.AddUser(user);
-//            goto restart;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Xeta: " + ex.Message);
+            Console.ResetColor();
+            goto passwordBash;
+        }
+    case "2":
+        User adminUser = null;
+        while (adminUser == null)
+        {
+            Console.WriteLine("ENTER EMAIL: ");
+            string confimEmail = Console.ReadLine();
+            Console.WriteLine("ENTER PASSWORD: ");
+            string confimPassword = Console.ReadLine();
+            try
+            {
+                adminUser = userService.Login(confimEmail, confimPassword);
+                Console.WriteLine("Girish olundu: \n");
+                break;
+            }
+            catch (NotFoundException q)
+            {
+                Console.WriteLine(q.Message);
+            }
+        }
 
-//        }
-//        catch (Exception ex)
-//        {
-//            Console.WriteLine("Xeta: " + ex.Message);
-//            Console.ResetColor();
-//            goto passwordBash;
-//        }
-//    case "2":
-//        User adminUser = null;
-//        while (adminUser == null)
-//        {
-//            Console.WriteLine("ENTER EMAIL: ");
-//            string confimEmail = Console.ReadLine();
-//            Console.WriteLine("ENTER PASSWORD: ");
-//            string confimPassword = Console.ReadLine();
-//            try
-//            {
-//                adminUser = userService.Login(confimEmail, confimPassword);
-//                Console.WriteLine("Girish olundu: \n");
-//                break;
-//            }
-//            catch (NotFoundException q)
-//            {
-//                Console.WriteLine(q.Message);
-//            }
-//        }
-
-//        break;
-//    case "0":
-//        return;
-//    default:
-//        goto restart;
-//}
+        break;
+    case "0":
+        return;
+    default:
+        goto restart;
+}
 
 bool stop = false;
 menyu1:
@@ -376,7 +379,9 @@ while (!stop)
             }
             Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
             break;
-
+        case "11":
+            goto restart;
+            break;
         case "yes":
             goto menyu1;
             break;
