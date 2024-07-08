@@ -198,10 +198,75 @@ while (!stop)
                 break;
 
             }
-            Console.WriteLine("Medicine adi daxil edin");
-            string name = Console.ReadLine();
-            Console.WriteLine("Qiymet daxil edin");
-            int price = int.Parse(Console.ReadLine());
+            string name = "";
+            bool validInput = false;
+
+            while (!validInput)
+            {
+                Console.WriteLine("Medicine adı daxil edin:");
+                try
+                {
+                    name = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        throw new ArgumentException("Ad boş ola bilmez.");
+                    }
+                    if (name.Any(char.IsDigit))
+                    {
+                        throw new ArgumentException("Ad reqemler ola bilmez.");
+                    }
+                    if (name == name.ToUpper())
+                    {
+                        throw new ArgumentException("Ad yalnız böyük herflerle ola bilmez.");
+                    }
+                    if (name == name.ToLower())
+                    {
+                        throw new ArgumentException("Ad yalnız kiçik herflerle ola bilmez.");
+                    }
+
+                    validInput = true;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Daxil etdiyiniz ad: " + name);
+                    Console.ResetColor();
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Error.WriteLine("Xeta: " + ex.Message);
+                    Console.ResetColor();
+                }
+            }
+            int price = 0;
+            bool validInpu = false;
+
+            while (!validInpu)
+            {
+                Console.WriteLine("Qiymet daxil edin:");
+                try
+                {
+                    price = int.Parse(Console.ReadLine());
+                    if (price > 0)
+                    {
+                        validInpu = true;
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Daxil etdiyiniz qiymet: " + price);
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Error.WriteLine("Xeta: Qiymet müsbet ve sıfırdan böyük olmalıdır.");
+                        Console.ResetColor();
+                    }
+                }
+                catch (FormatException)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Error.WriteLine("Xeta: Zehmet olmasa, yalnız reqem daxil edin.");
+                    Console.ResetColor();
+                }
+            }
             Console.WriteLine("Kateqoruya id daxil edin");
             foreach (var item in DB.Categories)
             {
@@ -336,7 +401,7 @@ while (!stop)
                     {
                         if (item != null)
                         {
-                            Console.WriteLine($"Medicine ID: {item.Id}, Adı: {item.Name}, Qiyməti: {item.Price}");
+                            Console.WriteLine($"Medicine ID: {item.Id}, Adı: {item.Name}, Qiymeti: {item.Price}");
                         }
                     }
                     Console.ResetColor();
