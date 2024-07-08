@@ -9,6 +9,7 @@ using System.Threading.Channels;
 UserService userService = new UserService();
 MedicineService medicineService = new MedicineService();
 CategoryService categoryService = new CategoryService();
+User activeUser = null;
 
 
 restart:
@@ -128,8 +129,7 @@ switch (menyuStart)
             goto passwordBash;
         }
     case "2":
-        User adminUser = null;
-        while (adminUser == null)
+        while (activeUser == null)
         {
             Console.WriteLine("ENTER EMAIL: ");
             string confimEmail = Console.ReadLine();
@@ -137,7 +137,7 @@ switch (menyuStart)
             string confimPassword = Console.ReadLine();
             try
             {
-                adminUser = userService.Login(confimEmail, confimPassword);
+                activeUser = userService.Login(confimEmail, confimPassword);
                 Console.WriteLine("Girish olundu: \n");
                 break;
             }
@@ -357,7 +357,7 @@ while (!stop)
             }
             break;
         case "8":
-            Console.ForegroundColor= ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Revome elemek isdediyiniz medicinin İd daxil edin");
             Console.ResetColor();
             foreach (var item in DB.Medicines)
@@ -379,6 +379,50 @@ while (!stop)
             }
             Console.WriteLine("Esas menyuya qayidmaq isdeyirsinizmi? yes/no");
             break;
+        case "9":
+            Console.WriteLine("Please enter medicine id");
+
+            int updatedId = int.Parse(Console.ReadLine());
+
+            try
+            {
+
+
+                var existMedicine = medicineService.GetMedicineById(updatedId);
+
+                Console.WriteLine("Please enter new name");
+                string newName = Console.ReadLine();
+                Console.WriteLine("Please enter new price");
+                int newPrice = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter new categoryId");
+                int newCategoryId = int.Parse(Console.ReadLine());
+
+                Medicine UpdatedMedicine = new(newName, newPrice, newCategoryId, activeUser.Id);
+
+                medicineService.UpdateMedicine(updatedId, UpdatedMedicine);
+
+
+                Console.WriteLine("Medicine successfull updated");
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.ResetColor();
+
+            }
+            break;
+
+
+
+
+
+
+
+
+
         case "11":
             goto restart;
             break;

@@ -40,7 +40,7 @@ public class MedicineService
 
         }
         throw new NotFoundException("Bu Id-li medicine tapilmadi");
-        
+
     }
     public Medicine GetMedicineByName(string name)
     {
@@ -58,20 +58,20 @@ public class MedicineService
 
     public Medicine[] GetMedicineByCategory(int categoryId)
     {
-        int count= 0;
-        foreach(var medicine in DB.Medicines)
+        int count = 0;
+        foreach (var medicine in DB.Medicines)
         {
-            if (medicine.CategoryId==categoryId)
+            if (medicine.CategoryId == categoryId)
             {
                 count++;
             }
         }
 
-        Medicine[] newMedicine= new Medicine[count];
+        Medicine[] newMedicine = new Medicine[count];
         int index = 0;
         foreach (var item in DB.Medicines)
         {
-            if (item.CategoryId== categoryId)
+            if (item.CategoryId == categoryId)
             {
                 newMedicine[index++] = item;
             }
@@ -85,11 +85,11 @@ public class MedicineService
         {
             if (DB.Medicines[i].Id == id)
             {
-                for (int j = i; j < DB.Medicines.Length-1; j++)
+                for (int j = i; j < DB.Medicines.Length - 1; j++)
                 {
                     DB.Medicines[j] = DB.Medicines[j + 1];
                 }
-                Array.Resize(ref DB.Medicines, DB.Medicines.Length-1);
+                Array.Resize(ref DB.Medicines, DB.Medicines.Length - 1);
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Removdan sonra medicinler>>>>");
                 Console.ResetColor();
@@ -109,7 +109,10 @@ public class MedicineService
         {
             if (DB.Medicines[i].Id == id)
             {
-                DB.Medicines[i] = newMedicine;
+                DB.Medicines[i].Name = newMedicine.Name;
+                DB.Medicines[i].Price = newMedicine.Price;
+                DB.Medicines[i].CategoryId = newMedicine.CategoryId;
+
                 return;
             }
         }
